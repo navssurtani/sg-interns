@@ -5,11 +5,14 @@ import javax.xml.parsers.SAXParserFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
+import sg.com.redhat.interns.beans.GithubOrganization;
+
+import java.util.List;
 
 
 public class XMLParser {
 
-    public static void main(String[] args) {
+    public static void execute() {
         try {
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser parser = factory.newSAXParser();
@@ -72,6 +75,11 @@ public class XMLParser {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static List<GithubOrganization> parse() {
+        // TODO: Implement me.
+        return null;
     }
 }
 
