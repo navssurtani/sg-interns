@@ -68,7 +68,7 @@ public class XMLParser {
                 }
             };
 
-            parser.parse("github-team-data.xml", handler);
+            parser.parse("./src/main/resources/github-team-data.xml", handler);
         } catch (Exception e) {
             e.printStackTrace();
         }
