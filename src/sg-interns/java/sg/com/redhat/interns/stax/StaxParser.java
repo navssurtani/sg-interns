@@ -25,12 +25,9 @@ public class StaxParser {
     public List<Item> readConfig(String configFile) {
         List<Item> items = new ArrayList<Item>();
         try {
-            // First create a new XMLInputFactory
             XMLInputFactory inputFactory = XMLInputFactory.newInstance();
-            // Setup a new eventReader
             InputStream in = new FileInputStream(configFile);
             XMLEventReader eventReader = inputFactory.createXMLEventReader(in);
-            // Read the XML document
             Item item = null;
 
             while (eventReader.hasNext()) {
@@ -38,13 +35,9 @@ public class StaxParser {
 
                 if (event.isStartElement()) {
                     StartElement startElement = event.asStartElement();
-                    // If we have a item element we create a new item
                     if (startElement.getName().getLocalPart() == (ORGNAME)) {
                         item = new Item();
-                        // We read the attributes from this tag and add the date
-                        // attribute to our object
-                        Iterator<Attribute> attributes = startElement
-                                .getAttributes();
+                        Iterator<Attribute> attributes = startElement.getAttributes();
                         while (attributes.hasNext()) {
                             Attribute attribute = attributes.next();
 
@@ -52,8 +45,7 @@ public class StaxParser {
                     }
 
                     if (event.isStartElement()) {
-                        if (event.asStartElement().getName().getLocalPart()
-                                .equals(ORGNAME)) {
+                        if (event.asStartElement().getName().getLocalPart().equals(ORGNAME)) {
                             event = eventReader.nextEvent();
                             item.setOrgName(event.asCharacters().getData());
                             continue;
@@ -62,23 +54,20 @@ public class StaxParser {
 
 
                     if (event.isStartElement()) {
-                        if (event.asStartElement().getName().getLocalPart()
-                                .equals(TOKEN)) {
+                        if (event.asStartElement().getName().getLocalPart().equals(TOKEN)) {
                             event = eventReader.nextEvent();
                             item.setToken(event.asCharacters().getData());
                             continue;
                         }
                     }
 
-                    if (event.asStartElement().getName().getLocalPart()
-                            .equals(TEAMNAME)) {
+                    if (event.asStartElement().getName().getLocalPart().equals(TEAMNAME)) {
                         event = eventReader.nextEvent();
                         item.setTeamName(event.asCharacters().getData());
                         continue;
                     }
 
-                    if (event.asStartElement().getName().getLocalPart()
-                            .equals(ID)) {
+                    if (event.asStartElement().getName().getLocalPart().equals(ID)) {
                         event = eventReader.nextEvent();
                         item.setId(event.asCharacters().getData());
                         continue;
