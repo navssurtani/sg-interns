@@ -1,4 +1,4 @@
-package sg.com.redhat.interns.xml;
+package sg.com.redhat.interns.xml.sax;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -7,12 +7,12 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 
-public class XMLParser {
+public class SAXGitParser {
 
     public static void main(String[] args) {
         try {
             SAXParserFactory factory = SAXParserFactory.newInstance();
-            SAXParser parser = factory.newSAXParser();
+            javax.xml.parsers.SAXParser parser = factory.newSAXParser();
 
             DefaultHandler handler = new DefaultHandler() {
 
