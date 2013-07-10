@@ -25,8 +25,6 @@ public class ParserXML {
                 public void startElement(String uri, String localName,String qName,
                                          Attributes attributes) throws SAXException {
 
-                    //System.out.println("Start Element :" + qName);
-
                     if (qName.equalsIgnoreCase("org-name")) {
                         orgName = true;
                     }
@@ -45,13 +43,6 @@ public class ParserXML {
 
                 }
 
-                public void endElement(String uri, String localName,
-                                       String qName) throws SAXException {
-
-                    //System.out.println("End Element :" + qName);
-
-                }
-
                 public void characters(char ch[], int start, int length) throws SAXException {
 
                     if (orgName) {
@@ -66,12 +57,12 @@ public class ParserXML {
                     }
 
                     if (teamName) {
-                        System.out.println("Team Name : " + new String(ch, start, length));
+                        System.out.println("     Team Name : " + new String(ch, start, length));
                         teamName = false;
                     }
 
                     if (id) {
-                        System.out.println("ID : " + new String(ch, start, length));
+                        System.out.println("     ID : " + new String(ch, start, length));
                         id = false;
 
 
