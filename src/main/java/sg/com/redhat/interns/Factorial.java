@@ -1,6 +1,6 @@
 package sg.com.redhat.interns;
 
-public class Factorial {
+class Factorial {
 
    public Factorial() {
    }
