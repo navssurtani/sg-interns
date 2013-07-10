@@ -9,6 +9,6 @@ public class Main {
          int calculatedValue = f.calculate(i);
          System.out.println("The factorial for " + i + " is: " + calculatedValue);
       }
-
    }
+
 }
