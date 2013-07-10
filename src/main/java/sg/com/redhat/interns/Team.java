@@ -16,7 +16,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public class Team {
 
-    public static void main(String argv[]) {
+    public static void team() {
 
         try {
 
