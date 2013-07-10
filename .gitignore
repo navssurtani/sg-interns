@@ -3,6 +3,10 @@
 *.iml
 *.idea
 
+# Maven compiled directories
+target/
+target/*
+
 # Package Files #
 *.jar
 *.war
