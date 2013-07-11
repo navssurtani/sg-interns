@@ -21,7 +21,6 @@ public class XMLParser {
     private static final String ORGANIZATIONS = "organizations";
     private static final String ORGANIZATION = "organization";
     private static final String ORG_NAME = "org-name";
-    private static final String TOKEN = "token";
     private static final String TEAM = "team";
     private static final String TEAM_NAME = "team-name";
     private static final String ID = "id";
