@@ -4,14 +4,23 @@ package sg.com.redhat.interns.beans;
  * Another bean
  */
 public class GithubTeam {
-    // TODO: Implement me.
+
+    private String name;
+    private int id;
+
     public String getName() {
-        return null;
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getId() {
-        return 0;
+        return id;
     }
 
-
+    public void setId(int id) {
+        this.id = id;
+    }
 }

@@ -1,19 +1,29 @@
 package sg.com.redhat.interns.beans;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * Basic bean
  */
 public class GithubOrganization {
 
+    private String Name;
+    private Set<GithubTeam> teams;
+
     public String getName() {
-        // TODO: Implement this.
-        return null;
+        return Name;
     }
 
-    public List<GithubTeam> getTeams() {
-        // TODO: Implement this.
-        return null;
+    public void setName(String name) {
+        Name = name;
     }
+
+    public Set<GithubTeam> getTeams() {
+        return teams;
+    }
+
+    public void setTeams(Set<GithubTeam> teams) {
+        this.teams = teams;
+    }
+
 }
