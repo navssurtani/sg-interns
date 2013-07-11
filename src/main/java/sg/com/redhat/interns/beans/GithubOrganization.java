@@ -1,19 +1,39 @@
 package sg.com.redhat.interns.beans;
 
-import java.util.List;
+import java.util.HashSet;
 
 /**
  * Basic bean
  */
 public class GithubOrganization {
 
-    public String getName() {
-        // TODO: Implement this.
-        return null;
+    private String orgName;
+    private HashSet<GithubTeam> teams;
+
+    public GithubOrganization(String name){
+        this.orgName = name;
+        this.teams = new HashSet<GithubTeam>();
     }
 
-    public List<GithubTeam> getTeams() {
-        // TODO: Implement this.
-        return null;
+    public void addTeam(GithubTeam something){
+        teams.add(something);
+    }
+
+    public String getOrgName() {
+        return orgName;
+    }
+
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
+    }
+
+
+    public HashSet<GithubTeam> getTeams() {
+        return teams;
+    }
+
+    public void setTeams(HashSet<GithubTeam> teams) {
+        this.teams = teams;
+
     }
 }
