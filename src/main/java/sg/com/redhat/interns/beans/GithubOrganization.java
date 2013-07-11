@@ -10,15 +10,6 @@ public class GithubOrganization {
     private String orgName;
     private HashSet<GithubTeam> teams;
 
-    public GithubOrganization(String name){
-        this.orgName = name;
-        this.teams = new HashSet<GithubTeam>();
-    }
-
-    public void addTeam(GithubTeam something){
-        teams.add(something);
-    }
-
     public String getOrgName() {
         return orgName;
     }

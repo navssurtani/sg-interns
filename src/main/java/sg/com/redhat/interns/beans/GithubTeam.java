@@ -8,12 +8,6 @@ public class GithubTeam {
     private String name;
     private int id;
 
-    public GithubTeam(String name, int id){
-        if (name == null || id == 0) throw new NullPointerException("Null parameters");
-        this.name = name;
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }

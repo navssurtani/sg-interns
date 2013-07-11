@@ -95,8 +95,6 @@ public class XMLParser {
 
 
     public static HashSet<GithubOrganization> parse() {
-
-
         HashSet<GithubOrganization> orgs = null;
         try{
             GithubOrganization org = null;
@@ -119,12 +117,17 @@ public class XMLParser {
                         event = reader.nextEvent();
                         if (checkEventType(event, org_name)){
                             data = reader.nextEvent().asCharacters().getData();
-                            org = new GithubOrganization(data);
+
+
+                            org = new GithubOrganization();
+                            org.setOrgName(data);
+//                            org.setTeams(new HashSet<GithubTeam>());
                         }
 
                         if (checkEventType(event, team)){
                             String teamName = null;
                             int teamid;
+                            HashSet<GithubTeam> listOfTeams = new HashSet<GithubTeam>();
                             while (reader.hasNext()){
                                 event = reader.nextTag();
                                 if (checkEventType(event, team_name)){
@@ -135,7 +138,11 @@ public class XMLParser {
                                 else {
                                     if (checkEventType(event, id)){
                                         teamid = Integer.parseInt(reader.nextEvent().asCharacters().getData());
-                                        org.addTeam(new GithubTeam(teamName, teamid));
+                                        GithubTeam team = new GithubTeam();
+                                        team.setName(teamName);
+                                        team.setId(teamid);
+                                        listOfTeams.add(team);
+                                        org.setTeams(listOfTeams);
                                         orgs.add(org);
                                         break;
                                     }
