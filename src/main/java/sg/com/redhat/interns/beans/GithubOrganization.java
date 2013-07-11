@@ -1,19 +1,40 @@
 package sg.com.redhat.interns.beans;
 
+
+
+import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * Basic bean
  */
 public class GithubOrganization {
 
-    public String getName() {
-        // TODO: Implement this.
-        return null;
+
+    private String name;
+    private List<GithubTeam> teams;
+
+    public GithubOrganization(String name) {
+        this.name = name;
+        this.teams = new ArrayList<GithubTeam>();
+    }
+
+
+    public void addTeam(GithubTeam t){
+
+        teams.add(t);
     }
 
     public List<GithubTeam> getTeams() {
-        // TODO: Implement this.
-        return null;
+        return teams;
     }
+
+    public String getName() {
+        return name;
+    }
+
+
+
+
 }
