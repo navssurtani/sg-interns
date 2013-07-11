@@ -1,85 +1,109 @@
 package sg.com.redhat.interns.xml;
 
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
+import javax.xml.stream.XMLEventReader;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.events.XMLEvent;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashSet;
+import java.util.Set;
 import sg.com.redhat.interns.beans.GithubOrganization;
-
-import java.util.List;
+import sg.com.redhat.interns.beans.GithubTeam;
 
 
 public class XMLParser {
 
-    public static void execute() {
-        try {
-            SAXParserFactory factory = SAXParserFactory.newInstance();
-            SAXParser parser = factory.newSAXParser();
+    /* Constant Strings */
+    private static final String XML_DATA = "/home/gerald/code/sg-interns/src/main/resources/github-team-data.xml";
+    private static final String ORGANIZATIONS = "organizations";
+    private static final String ORGANIZATION = "organization";
+    private static final String ORG_NAME = "org-name";
+    private static final String TEAM = "team";
+    private static final String TEAM_NAME = "team-name";
+    private static final String ID = "id";
 
-            DefaultHandler handler = new DefaultHandler() {
+    private static Set<GithubOrganization> organizations = null;
 
-                boolean orgName = false;
-                boolean token = false;
-                boolean teamName = false;
-                boolean id = false;
+    private XMLParser() {
+    }
 
-                public void startElement (String uri, String locaName,
-                                          String qName, Attributes attributes) throws SAXException {
-                    if(qName.equalsIgnoreCase("org-name")) {
-                        orgName = true;
-                    }
+    public static Set<GithubOrganization> parse() {
 
-                    if(qName.equalsIgnoreCase("token")) {
-                        token = true;
-                    }
+        Set<GithubOrganization> orgs = null;
+        try{
+            GithubOrganization org = null;
+            InputStream in = getAndCheckFile(XML_DATA);
 
-                    if(qName.equalsIgnoreCase("team-name")) {
-                        teamName = true;
-                    }
+            XMLEventReader reader = null;
+            XMLInputFactory inputFactory = XMLInputFactory.newInstance();
+            reader = inputFactory.createXMLEventReader(in);
 
-                    if(qName.equalsIgnoreCase("id")) {
-                        id = true;
-                    }
+            while (reader.hasNext()) {
+                XMLEvent event = reader.nextEvent();
+                String data;
+
+                if (checkEventType(event, ORGANIZATIONS)) {
+                    data = reader.nextEvent().asCharacters().getData();
+                    orgs = new HashSet<GithubOrganization>();
                 }
 
-                public void endElement(String uri, String localName,
-                                       String qName) throws SAXException {
+                if (checkEventType(event, ORGANIZATION)) {
 
+                    while (reader.hasNext()) {
+                        event = reader.nextEvent();
+                        if (checkEventType(event, ORG_NAME)) {
+                            data = reader.nextEvent().asCharacters().getData();
+                            org = new GithubOrganization(data);
+                        }
+
+                        if (checkEventType(event, TEAM)) {
+                            // We have found a team. Now we will extract the team name.
+                            String teamName = null;
+                            int teamId;
+                            while (reader.hasNext()) {
+                                event = reader.nextTag();
+                                if (checkEventType(event, TEAM_NAME)) {
+                                    teamName = reader.nextEvent().asCharacters().getData();
+                                } else {
+                                    if (checkEventType(event, ID)) {
+                                        teamId = Integer.parseInt(reader.nextEvent().asCharacters().getData());
+                                        org.addTeam(new GithubTeam(teamName, teamId));
+                                        orgs.add(org);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+
+                    }
                 }
+            }
+        }
 
-                public void characters(char ch[], int start, int length) throws SAXException {
-                    if(orgName) {
-                        System.out.println("Organization Name: " + new String(ch, start, length));
-                        orgName = false;
-                    }
 
-                    if(token) {
-                        System.out.println("Token: " + new String(ch, start, length));
-                        token = false;
-                    }
 
-                    if(teamName) {
-                        System.out.println("Team Name: " + new String(ch, start, length));
-                        teamName = false;
-                    }
+        catch(XMLStreamException ex){
 
-                    if(id) {
-                        System.out.println("ID: " + new String(ch, start, length));
-                        id = false;
-                    }
-                }
-            };
+            ex.printStackTrace();
 
-            parser.parse("./src/main/resources/github-team-data.xml", handler);
-        } catch (Exception e) {
+        }
+        return orgs;
+    }
+
+    private static boolean checkEventType(XMLEvent event, String constant) {
+        return event.isStartElement() && event.asStartElement().getName().getLocalPart().equals(constant);
+    }
+
+    private static InputStream getAndCheckFile(String xmlFile) {
+        try{
+            return new FileInputStream(xmlFile);
+        }
+        catch(FileNotFoundException e){
             e.printStackTrace();
+            return null;
         }
     }
-
-    public static List<GithubOrganization> parse() {
-        // TODO: Implement me.
-        return null;
-    }
 }
-

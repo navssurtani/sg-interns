@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 import sg.com.redhat.interns.beans.GithubOrganization;
 import sg.com.redhat.interns.beans.GithubTeam;
 import sg.com.redhat.interns.xml.XMLParser;
-
+import java.util.Set;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,13 +18,14 @@ public class XMLParserTest {
 
     @Test
     public void testParsing() {
-        List<GithubOrganization> orgs = XMLParser.parse();
+        Set<GithubOrganization> orgs = XMLParser.parse();
         Assert.assertNotNull(orgs);
         Assert.assertTrue("There are two organizations in the file.", orgs.size() == 2);
 
         List<String> teamNames = new ArrayList<String>();
         teamNames.add("EAP View");
         teamNames.add("Trial");
+        teamNames.add("Owners");
 
         for (GithubOrganization o : orgs) {
             Assert.assertNotNull(o.getName());
