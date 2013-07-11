@@ -1,17 +1,28 @@
 package sg.com.redhat.interns.beans;
 
-/**
- * Another bean
- */
+
+
 public class GithubTeam {
-    // TODO: Implement me.
+
+    private String Name;
+    private int id;
+
+    public GithubTeam(String Name, int id) {
+        if (Name == null || id == 0) throw new NullPointerException("Null params");
+        this.Name = Name;
+        this.id = id;
+    }
+
+    public GithubTeam(){
+
+    }
+
     public String getName() {
-        return null;
+        return Name;
     }
 
     public int getId() {
-        return 0;
+        return id;
     }
-
 
 }
