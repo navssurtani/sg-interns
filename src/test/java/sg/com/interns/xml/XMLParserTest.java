@@ -8,6 +8,7 @@ import sg.com.redhat.interns.beans.GithubTeam;
 import sg.com.redhat.interns.xml.XMLParser;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -18,16 +19,17 @@ public class XMLParserTest {
 
     @Test
     public void testParsing() {
-        List<GithubOrganization> orgs = XMLParser.parse();
+        HashSet<GithubOrganization> orgs = XMLParser.parse();
         Assert.assertNotNull(orgs);
         Assert.assertTrue("There are two organizations in the file.", orgs.size() == 2);
 
         List<String> teamNames = new ArrayList<String>();
+        teamNames.add("Owners");
         teamNames.add("EAP View");
         teamNames.add("Trial");
 
         for (GithubOrganization o : orgs) {
-            Assert.assertNotNull(o.getName());
+            Assert.assertNotNull(o.getOrgName());
             for (GithubTeam t :o.getTeams()) {
                 Assert.assertNotNull(t);
                 if (teamNames.contains(t.getName())) {
